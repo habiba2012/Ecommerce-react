@@ -2,18 +2,17 @@ import React from 'react';
 
 const Cart = (props) => {
     const cart = props.cart;
-    console.log(cart)
     // const totalPrice = cart.reduce((total, prd) => total + prd.price, 0);
     // const total = cart. reduce((total,prd)=>total + prd.price,0)
     let total = 0;
     for(let i = 0; i<cart.length; i++){
         const product = cart[i];
-        total = total + product.price;
+        total = total + product.price * product.quantity;
     }
 
     let shipping = 0;
     
-    if (total>35){
+     if (total>35){
         shipping = 0;
 
     }
@@ -28,7 +27,7 @@ const Cart = (props) => {
     const grandTotal = (total + shipping + tax)
 
     const formatNumber = num =>{
-        const precession = num.toFixed(2)
+        const precession = parseFloat(num).toFixed(2)
         return Number(precession)
     }
 
@@ -40,6 +39,9 @@ const Cart = (props) => {
             <p><small>Shipping Cost: {shipping}</small></p>
              <p><small>Tax + VAT : {tax}</small></p>
             <p>Total price: {formatNumber(grandTotal)}</p>
+            {
+            props.children
+            }
         </div>
     );
 };
